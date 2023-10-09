@@ -1,0 +1,22 @@
+{
+  "name": "@adebsa2401/react-native-code-pin",
+  "version": "1.0.0",
+  "description": "A cross-platform, smooth, lightweight, customizable PIN code input component for React Native.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "typescript",
+    "android",
+    "ios",
+    "react-native",
+    "password",
+    "pin",
+    "pincode",
+    "textinput"
+  ],
+  "author": "Ben Salès (adebsa2401@gmail.com)",
+  "license": "MIT"
+}
