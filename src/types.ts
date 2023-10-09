@@ -18,12 +18,13 @@ export interface IRNCodePinProps {
   cellStyleFilled?: ViewStyle;
   textStyle?: TextStyle;
   textStyleFocused?: TextStyle;
+  label?: string | React.ReactElement;
+  labelStyle?: TextStyle;
   animated?: boolean;
   animationFocused?: string | object;
   onFulfill?: (code: string) => void;
-  onChangeText?: () => void;
+  onChangeText?: (code: string) => void;
   onBackspace?: () => void;
-  onTextChange?: (code: string) => void;
   testID?: string;
   onFocus?: () => void;
   onBlur?: () => void;

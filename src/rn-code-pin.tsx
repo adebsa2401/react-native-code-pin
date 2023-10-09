@@ -8,38 +8,40 @@ import {
   View
 } from "react-native";
 import {IRNCodePinProps} from "./types";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 
 export default function RNCodePin({
-  value = '',
-  codeLength = 4,
-  cellSize = 48,
-  cellSpacing = 4,
-  placeholder = '',
-  password = false,
-  mask = '*',
-  maskDelay = 200,
-  keyboardType = 'numeric',
-  autoFocus = false,
-  restrictToNumbers = false,
-  containerStyle = styles.containerDefault,
-  cellStyle = styles.cellDefault,
-  cellStyleFocused = styles.cellFocusedDefault,
-  cellStyleFilled = {},
-  textStyle = styles.textStyleDefault,
-  textStyleFocused = styles.textStyleFocusedDefault,
-  // animationFocused = 'pulse',
-  // animated = true,
-  editable = true,
-  inputProps = {},
-  disableFullscreenUI = true,
-  onTextChange,
-  onFulfill,
-  onBackspace,
-  onFocus,
-  onBlur,
-  testID
-}: IRNCodePinProps) {
+                                    value = '',
+                                    codeLength = 4,
+                                    cellSize = 48,
+                                    cellSpacing = 4,
+                                    placeholder = '',
+                                    password = false,
+                                    mask = '*',
+                                    maskDelay = 200,
+                                    keyboardType = 'numeric',
+                                    autoFocus = false,
+                                    restrictToNumbers = false,
+                                    containerStyle = styles.containerDefault,
+                                    cellStyle = styles.cellDefault,
+                                    cellStyleFocused = styles.cellFocusedDefault,
+                                    cellStyleFilled = {},
+                                    textStyle = styles.textStyleDefault,
+                                    textStyleFocused = styles.textStyleFocusedDefault,
+                                    label,
+                                    labelStyle = styles.labelStyleDefault,
+                                    // animationFocused = 'pulse',
+                                    // animated = true,
+                                    editable = true,
+                                    inputProps = {},
+                                    disableFullscreenUI = true,
+                                    onChangeText,
+                                    onFulfill,
+                                    onBackspace,
+                                    onFocus,
+                                    onBlur,
+                                    testID,
+                                  }: IRNCodePinProps) {
   const [focused, setFocused] = useState(autoFocus);
   const [maskDelayed, setMaskDelayed] = useState(false);
   const ref = useRef<View>(null);
@@ -50,7 +52,7 @@ export default function RNCodePin({
       code = (code.match(/[0-9]/g) || []).join("");
     }
 
-    onTextChange?.(code);
+    onChangeText?.(code);
     (code.length === codeLength) && onFulfill?.(code);
 
     // handle password mask
@@ -77,7 +79,7 @@ export default function RNCodePin({
   useEffect(() => {
     if (maskDelayed) { // mask password after delay
       const maskTimeout = setTimeout(() => {
-        setMaskDelayed(false);
+          setMaskDelayed(false);
         },
         maskDelay
       );
@@ -85,10 +87,6 @@ export default function RNCodePin({
       return () => clearTimeout(maskTimeout);
     }
   }, [maskDelayed, maskDelay]);
-
-  if (maskDelayed) {
-    const [state, setState] = useState(true);
-  }
 
   return (
     <View
@@ -102,9 +100,20 @@ export default function RNCodePin({
       ]}>
       <View style={{
         position: 'absolute', margin: 0, height: '100%',
-        flexDirection: I18nManager.isRTL ? 'row-reverse': 'row',
+        flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
         alignItems: 'center',
       }}>
+        <Text style={[{
+          fontSize: 15,
+          color: "#000",
+          position: "absolute",
+          bottom: "100%",
+          left: 0,
+        },
+          labelStyle
+        ]}>
+          {label}
+        </Text>
         {
           [...Array(codeLength)].map((_, idx) => {
             const cellFocused = focused && idx === value.length;
@@ -119,7 +128,7 @@ export default function RNCodePin({
             if (filled || placeholder !== null) {
               if (showMask && isMaskText) {
                 cellText = mask;
-              } else if(!filled && isPlaceholderText) {
+              } else if (!filled && isPlaceholderText) {
                 cellText = placeholder;
               } else if (pinCodeChar) {
                 cellText = pinCodeChar;
@@ -209,4 +218,5 @@ const styles = StyleSheet.create({
   textStyleFocusedDefault: {
     color: 'black',
   },
+  labelStyleDefault: {},
 });
