@@ -1,1 +1,1 @@
-export { default as RNCodePin } from "./rn-code-pin";
+export { default as RNCodePin } from './rn-code-pin'
