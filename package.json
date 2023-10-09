@@ -2,9 +2,18 @@
   "name": "@adebsa2401/react-native-code-pin",
   "version": "1.0.0",
   "description": "A cross-platform, smooth, lightweight, customizable PIN code input component for React Native.",
-  "main": "index.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
+    "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run prettier && npm run lint"
   },
   "keywords": [
     "react",
@@ -18,5 +27,28 @@
     "textinput"
   ],
   "author": "Ben Salès (adebsa2401@gmail.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adebsa2401/react-native-code-pin.git"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.25",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.0.3",
+    "react": "^18.2.0",
+    "react-native": "^0.72.5",
+    "typescript": "^5.2.2"
+  }
 }
