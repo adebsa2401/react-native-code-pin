@@ -8,7 +8,7 @@ import {
   View
 } from "react-native";
 import {IRNCodePinProps} from "./types";
-import {ReactEventHandler, useCallback, useEffect, useRef, useState} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function RNCodePin({
   value = '',
@@ -28,8 +28,8 @@ export default function RNCodePin({
   cellStyleFilled = {},
   textStyle = styles.textStyleDefault,
   textStyleFocused = styles.textStyleFocusedDefault,
-  animationFocused = 'pulse',
-  animated = true,
+  // animationFocused = 'pulse',
+  // animated = true,
   editable = true,
   inputProps = {},
   disableFullscreenUI = true,
@@ -45,18 +45,6 @@ export default function RNCodePin({
   const ref = useRef<View>(null);
   const inputRef = useRef<TextInput>(null);
 
-  const focus = useCallback(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  const blur = useCallback(() => {
-    inputRef.current?.blur();
-  }, []);
-
-  const clear = useCallback(() => {
-    inputRef.current?.clear();
-  }, []);
-
   const handleCodeChange = useCallback((code: string) => {
     if (restrictToNumbers) {
       code = (code.match(/[0-9]/g) || []).join("");
@@ -68,7 +56,7 @@ export default function RNCodePin({
     // handle password mask
     setMaskDelayed(password &&
       (code.length > value.length)); // only when input new char
-  }, [codeLength, maskDelay, blur]);
+  }, [codeLength, maskDelay]);
 
   const handleKeyPress = useCallback(({nativeEvent: {key}}: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
     if (key === 'Backspace') {
@@ -97,6 +85,10 @@ export default function RNCodePin({
       return () => clearTimeout(maskTimeout);
     }
   }, [maskDelayed, maskDelay]);
+
+  if (maskDelayed) {
+    const [state, setState] = useState(true);
+  }
 
   return (
     <View
